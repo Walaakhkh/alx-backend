@@ -4,7 +4,6 @@ Deletion-resilient hypermedia pagination
 """
 
 import csv
-import math
 from typing import List, Dict
 
 
@@ -40,7 +39,8 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        Get a hypermedia pagination dictionary for a dataset indexed by position.
+        Get a hypermedia pagination dictionary for a dataset indexed by
+        position.
 
         Args:
             index (int): The starting index for the current page.
@@ -50,7 +50,9 @@ class Server:
             Dict: A dictionary containing pagination details.
         """
         # Validate the index
-        assert index >= 0 and index < len(self.__indexed_dataset), "Index is out of range"
+        assert index >= 0 and index < len(self.__indexed_dataset), (
+            "Index is out of range"
+        )
 
         # Prepare the result dictionary
         result = {
@@ -74,6 +76,8 @@ class Server:
                 break
 
         # Set the next_index in the result
-        result['next_index'] = current_index if current_index < len(indexed_data) else None
+        result['next_index'] = (
+            current_index if current_index < len(indexed_data) else None
+        )
 
         return result
