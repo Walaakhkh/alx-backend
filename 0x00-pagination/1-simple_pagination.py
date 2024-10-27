@@ -54,8 +54,12 @@ class Server:
             List[List]: A list of rows for the specified page of the dataset.
         """
         # Verify that both page and page_size are positive integers
-        assert isinstance(page, int) and page > 0, "page must be a positive integer"
-        assert isinstance(page_size, int) and page_size > 0, "page_size must be a positive integer"
+        assert isinstance(page, int) and page > 0, (
+            "page must be a positive integer"
+        )
+        assert isinstance(page_size, int) and page_size > 0, (
+            "page_size must be a positive integer"
+        )
 
         # Calculate start and end indexes for the requested page
         start_index, end_index = index_range(page, page_size)
@@ -63,5 +67,7 @@ class Server:
         # Load the dataset if it hasn't been loaded already
         dataset = self.dataset()
 
-        # Return the page data or an empty list if the page is out of range
-        return dataset[start_index:end_index] if start_index < len(dataset) else []
+        # Check if the start index is within the dataset range
+        if start_index < len(dataset):
+            return dataset[start_index:end_index]
+        return []
